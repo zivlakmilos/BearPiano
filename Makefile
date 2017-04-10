@@ -21,5 +21,7 @@ bearpiano.elf: $(OBJS)
 flash: bearpiano.hex
 	avrdude -p atmega328p -c usbasp -e -U flash:w:bearpiano.hex:i
 
+install: flash
+
 clean:
 	rm -Rf *.hex *.elf *.o
