@@ -3,7 +3,8 @@ CCFLAGS = -mmcu=atmega328p -DF_CPU=16000000UL
 OBJCOPY = avr-objcopy
 
 SRC = \
-	main.c
+	main.c \
+	capacitive_touch.c
 
 OBJS = $(SRC:.c=.o)
 
