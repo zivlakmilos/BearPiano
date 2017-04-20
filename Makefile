@@ -4,7 +4,8 @@ OBJCOPY = avr-objcopy
 
 SRC = \
 	main.c \
-	capacitive_touch.c
+	capacitive_touch.c \
+	uart.c
 
 OBJS = $(SRC:.c=.o)
 
