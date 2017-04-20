@@ -3,12 +3,10 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-uint64_t timerOvfCount;
 uint64_t time;
 
 ISR(TIMER0_OVF_vect)
 {
-    timerOvfCount++;
     time += TCNT0;
 }
 
@@ -25,7 +23,6 @@ void TOUCH_init(void)
 uint64_t TOUCH_read(GPIO *emitPin, GPIO *recivePin)
 {
     TCNT0 = 0;
-    timerOvfCount = 0;
     time = 0;
 
     SREG &= ~0x80;
@@ -34,8 +31,7 @@ uint64_t TOUCH_read(GPIO *emitPin, GPIO *recivePin)
 
     *((volatile uint8_t*)emitPin->port) &= ~(1 << emitPin->pin);
 
-    //while((*((volatile uint8_t*)(recivePin->port - 2)) >> recivePin->pin) & 0x01);
-    while(*((volatile uint8_t*)(recivePin->port - 2)) & (1 << recivePin->pin));
+    while((*((volatile uint8_t*)(recivePin->port - 2)) >> recivePin->pin) & 0x01);
     time += TCNT0;
 
     SREG &= ~0x80;
