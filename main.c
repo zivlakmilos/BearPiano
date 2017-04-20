@@ -25,7 +25,7 @@ int main(void)
     recivePin1.port = &PORTB;
     recivePin1.pin = 0;
     *((volatile uint8_t*)(recivePin1.port - 1)) &= ~(1 << recivePin1.pin);
-    *((volatile uint8_t*)recivePin1.port) |= (1 << recivePin1.pin);
+    //*((volatile uint8_t*)recivePin1.port) |= (1 << recivePin1.pin);
 
     DDRB |= (1 << DDB5);
 
@@ -36,7 +36,7 @@ int main(void)
         _delay_ms(25);
         continue;
 
-        if(TOUCH_read(&emitPin1, &recivePin1) > 100)
+        if(touch > 10000)
         {
             PORTB |= (1 << PB5);
         } else

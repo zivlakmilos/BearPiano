@@ -33,19 +33,16 @@ uint64_t TOUCH_read(GPIO *emitPin, GPIO *recivePin)
     SREG |= 0x80;
 
     *((volatile uint8_t*)emitPin->port) &= ~(1 << emitPin->pin);
-    //*((volatile uint8_t*)emitPin->port) |= (1 << emitPin->pin);
 
-    //while(!((*((volatile uint8_t*)recivePin->port) >> recivePin->pin) & 0x01));
-    //while(*((volatile uint8_t*)recivePin->port) & (1 << recivePin->pin) == 0);
-    while((*((volatile uint8_t*)(recivePin->port - 2)) >> recivePin->pin) & 0x01);
+    //while((*((volatile uint8_t*)(recivePin->port - 2)) >> recivePin->pin) & 0x01);
+    while(*((volatile uint8_t*)(recivePin->port - 2)) & (1 << recivePin->pin));
     time += TCNT0;
-
-    *((volatile uint8_t*)emitPin->port) |= (1 << emitPin->pin);
-    //*((volatile uint8_t*)emitPin->port) &= ~(1 << emitPin->pin);
 
     SREG &= ~0x80;
     TCCR0B &= ~(1 << CS00);     // Stop timer
     SREG |= 0x80;
+
+    *((volatile uint8_t*)emitPin->port) |= (1 << emitPin->pin);
 
     return time;
 }
