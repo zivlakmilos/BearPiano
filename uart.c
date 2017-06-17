@@ -34,6 +34,9 @@ void UART_putuint(uint64_t number)
     uint8_t i = 0;
     char decimals[sizeof(number) + 2];
 
+    if(number == 0)
+        decimals[i++] = '0';
+
     while(number > 0)
     {
         decimals[i++] = (number % 10) + '0';
