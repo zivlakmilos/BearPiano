@@ -15,7 +15,7 @@
 static uint8_t checkTouch(GPIO *emitPin, GPIO *recivePin)
 {
     uint64_t touch = TOUCH_read(emitPin, recivePin);
-    return touch > 10000 ? 1 : 0;
+    return touch > 1000 ? 1 : 0;
 }
 
 int main(void)
